@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 import requests
 from io import StringIO
 from config import settings
@@ -7,7 +8,10 @@ class MyAPI:
     def __init__(self):
         self.api_key = settings.api_key
         self.base_url = "https://www.alphavantage.co/query"
-
+        self.path = '../data/raw'
+        if not os.path.exists(self.path):
+                os.makedirs(self.path)
+        
     def get_stock(self, symbol, size="compact"):
         params = {
             "function": "TIME_SERIES_DAILY",
@@ -23,6 +27,8 @@ class MyAPI:
             df = pd.read_csv(StringIO(response.text))
             df.set_index('timestamp', inplace=True)
             df.sort_index(ascending = False)
+
+            df.to_csv(f'{self.path}/{symbol}.csv')
 
             return df
             
@@ -48,9 +54,11 @@ class MyAPI:
             df.set_index('timestamp', inplace=True)
             df.sort_index(ascending = False)
             
+            df.to_csv(f'{self.path}/{symbol}_{market}.csv')
+            
             return df
             
         except Exception as e:
-            print(f"Error fetching stock data: {e}")
+            print(f"Error fetching crypto data: {e}")
             
             return pd.DataFrame()  # return empty DataFrame on failure

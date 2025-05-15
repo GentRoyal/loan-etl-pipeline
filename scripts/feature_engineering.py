@@ -1,8 +1,6 @@
 import pandas as pd
 import numpy as np
 import pandas_ta as ta
-from sklearn.decomposition import PCA
-from sklearn.feature_selection import chi2
 
 class TechnicalIndicatorGenerator:
     def __init__(self):
