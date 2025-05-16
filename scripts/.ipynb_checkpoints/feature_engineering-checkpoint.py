@@ -3,10 +3,24 @@ import numpy as np
 import pandas_ta as ta
 
 class TechnicalIndicatorGenerator:
+    """
+    Generates a wide range of technical indicators for financial time series data.
+    """
+    
     def __init__(self):
         pass
 
     def generate_indicators(self, df):
+        """
+        Adds a variety of technical indicators to a DataFrame.
+
+        Parameters:
+        df (pd.DataFrame): DataFrame with columns ['open', 'high', 'low', 'close', 'volume'].
+
+        Returns:
+        pd.DataFrame: Enhanced DataFrame with technical indicators.
+        """
+        
         # Utility Indicators
         df['hl2'] = (df['high'] + df['low']) / 2
         df['hlc3'] = (df['high'] + df['low'] + df['close']) / 3
